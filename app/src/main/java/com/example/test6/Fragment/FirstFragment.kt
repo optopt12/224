@@ -22,12 +22,22 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import MY_API_KEY
+import android.speech.tts.TextToSpeech
+import android.speech.tts.TextToSpeech.OnInitListener
+import android.widget.TextView
+import android.widget.Toast
+import java.util.*
+import kotlin.collections.ArrayList
+
+
 private var _binding : FragmentFirstBinding? = null
 private val binding get() = _binding!!
 private lateinit var msgAdapter: MsgAdapter
 private val SPEECH_REQUEST_CODE = 0
-private lateinit var answer: String
+private var answer:String ="發送訊息以獲得回覆"
 private var msgList: MutableList<Msg> = ArrayList()//建立可改變的list
+private var tts: TextToSpeech? = null
+
 class FirstFragment : Fragment() {
 
     override fun onCreateView(
@@ -49,7 +59,10 @@ class FirstFragment : Fragment() {
         initRv() //RecyclerView初始化
         displaySpeechRecognizer()//語音辨識
         setListener()//發送訊息與ai對話
+        textToSpeech() //文字轉語音
     }
+
+
     private fun setListener() {
         binding.run {
             sendButton.setOnClickListener {
@@ -77,7 +90,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun initMsg() {
-        msgList.add(Msg("發送訊息以獲得回覆", Msg.LEFT))
+        msgList.add(Msg(answer, Msg.LEFT))
     }
 
     private fun aichat() {
@@ -139,4 +152,48 @@ class FirstFragment : Fragment() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
+    private fun textToSpeech() {
+
+        tts = TextToSpeech(context, OnInitListener { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val ttsLang = tts!!.setLanguage(Locale.TRADITIONAL_CHINESE)
+                if (ttsLang == TextToSpeech.LANG_MISSING_DATA || ttsLang == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Log.e("TTS", "The Language is not supported!")
+                } else {
+                    Log.i("TTS", "Language Supported.")
+                }
+                Log.i("TTS", "Initialization success.")
+            } else {
+                Toast.makeText(context, "TTS Initialization failed!", Toast.LENGTH_SHORT).show()
+            }
+        })
+        speech_button!!.setOnClickListener {
+            val data = answer
+            Log.i("TTS", "button clicked: $data")
+            tts!!.setPitch(1F)    // 語調(1 為正常；0.5 為低一倍；2 為高一倍)
+            tts!!.setSpeechRate(1F)    // 速度(1 為正常；0.5 為慢一倍；2 為快一倍)
+            val speechStatus = tts!!.speak(data, TextToSpeech.QUEUE_FLUSH, null)
+            if (speechStatus == TextToSpeech.ERROR) {
+                Log.e("TTS", "Error in converting Text to Speech!")
+            }
+        }
+
+
+          fun onDestroy() {
+            super.onDestroy()
+            if (tts != null) {
+                tts!!.stop()
+                tts!!.shutdown()
+            }
+        }
+
+    }
+
+
+
+
+
 }
+
+
