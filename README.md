@@ -1,6 +1,11 @@
 # TabLayout-with-ViewPager2
 
 
+OPENAI_KEY
+food_ID
+foodKEY
+
+
 ## 👨 Developed By Burak Selcuk
 [![Linkedin](https://img.shields.io/badge/-linkedin-grey?logo=linkedin)](https://www.linkedin.com/in/burak-sel%C3%A7uk-a4740b218/)
 

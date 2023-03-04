@@ -12,20 +12,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        view_pager.isUserInputEnabled = false
         val adapter = ViewPagerAdapter(supportFragmentManager,lifecycle)
         view_pager.adapter = adapter
 
         TabLayoutMediator(tabLayout,view_pager){tab,position->
             when(position){
                 0->{
-                    tab.text ="First"
+                    tab.text ="聊天室"
                 }
                 1->{
-                    tab.text="Second"
+                    tab.text="點餐"
                 }
                 2->{
-                    tab.text="Third"
+                    tab.text="營養資訊"
                 }
                 3->{
                     tab.text="Fourth"
@@ -35,5 +35,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }.attach()
+
     }
 }
