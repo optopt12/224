@@ -60,6 +60,7 @@ class FirstFragment : Fragment() {
         displaySpeechRecognizer()//語音辨識
         setListener()//發送訊息與ai對話
         textToSpeech() //文字轉語音
+
     }
 
 

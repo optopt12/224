@@ -16,7 +16,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDQFBnpQkS5D2R4-jOaBzdHQL0yUQOtbkU" />
+            android:value="${GOOGLE_KEY}" />
 
         <!-- 若目標版本在 API 28 或以上需要額外設定 Apache -->
 
