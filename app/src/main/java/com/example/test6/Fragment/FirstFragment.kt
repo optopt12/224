@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_first.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import MY_API_KEY
+import OPENAI_KEY
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.widget.TextView
@@ -60,6 +60,7 @@ class FirstFragment : Fragment() {
         displaySpeechRecognizer()//語音辨識
         setListener()//發送訊息與ai對話
         textToSpeech() //文字轉語音
+
     }
 
 
@@ -94,10 +95,15 @@ class FirstFragment : Fragment() {
     }
 
     private fun aichat() {
-        val API_KEY = "Bearer $MY_API_KEY" //獲得api-key
+        val API_KEY = "Bearer $OPENAI_KEY" //獲得api-key
         val openAI = OpenAI(API_KEY)
         var prompt = editText.text.toString()//要和ai說的話
         val message = binding.editText.text.toString()
+
+        progressBar.progress=0
+        ll_progress.visibility=View.VISIBLE //讀取條跳出
+
+
         CoroutineScope(Dispatchers.IO).launch {
             prompt += "\n\nHuman: $message \nAI:"
             try {
@@ -114,6 +120,10 @@ class FirstFragment : Fragment() {
                 if (response.isSuccessful) {
                     answer = response.body()?.choices?.first()?.text.toString()//ai回答的話
                     CoroutineScope(Dispatchers.Main).launch {
+
+                        ll_progress.visibility=View.GONE //讀取完成，讀取條消失
+
+
                         msgList.add(Msg(answer, Msg.LEFT))//讓ai說的話顯示出來
                         msgAdapter.notifyDataSetChanged()   //为RecyclerView添加末尾子项
                     }
@@ -178,7 +188,7 @@ class FirstFragment : Fragment() {
                 Log.e("TTS", "Error in converting Text to Speech!")
             }
         }
-
+        tts!!.shutdown()   //釋放資源?
 
           fun onDestroy() {
             super.onDestroy()
