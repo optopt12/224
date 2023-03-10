@@ -15,12 +15,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import coil.load
+import com.example.test6.BuildConfig
 import com.example.test6.FoodApiService
 import com.example.test6.food.Posts
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.gson.Gson
-import food_ID
-import food_KEY
 import kotlinx.android.synthetic.main.fragment_third.*
 import okhttp3.*
 import retrofit2.Retrofit
@@ -53,8 +52,8 @@ class ThirdFragment : Fragment() {
         var aaa:String=""
 
         val data: MutableMap<String, String> = HashMap()
-        data["app_id"] = food_ID
-        data["app_key"] = food_KEY
+        data["app_id"] = BuildConfig.food_ID
+        data["app_key"] = BuildConfig.food_KEY
         data["nutrition-type"] ="cooking"
         data["ingr"]
 
@@ -74,7 +73,7 @@ class ThirdFragment : Fragment() {
 //                            sb.append("---------------------\n")
 //                        }
 //                    }
-                    tv.text =list!!.hints.get(0).food.toString()
+                    tv.text =list!!.hints.get(0).toString()
                     Log.d("Huang", " get teams  success "+list.hints.get(0).food)
 
                     url=list.hints.get(0).food.image

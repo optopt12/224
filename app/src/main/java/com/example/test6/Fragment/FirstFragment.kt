@@ -21,11 +21,12 @@ import kotlinx.android.synthetic.main.fragment_first.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import OPENAI_KEY
+//import OPENAI_KEY
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.widget.TextView
 import android.widget.Toast
+import com.example.test6.BuildConfig
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -95,7 +96,7 @@ class FirstFragment : Fragment() {
     }
 
     private fun aichat() {
-        val API_KEY = "Bearer $OPENAI_KEY" //獲得api-key
+        val API_KEY = "Bearer ${BuildConfig.OPENAI_KEY}" //獲得api-key
         val openAI = OpenAI(API_KEY)
         var prompt = editText.text.toString()//要和ai說的話
         val message = binding.editText.text.toString()

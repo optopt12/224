@@ -6,8 +6,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-
-
 data class Posts(
     @SerializedName("_links")
     val _links: Links,
@@ -73,6 +71,8 @@ data class Qualifier(
 
 
 
+
+
 data class Test(
 
     val ingredients: List<Ingredient>
@@ -81,8 +81,8 @@ data class Test(
 data class Ingredient(
     val foodId: String,
     val measureURI: String,
-    val qualifiers: List<String>,
-    val quantity: Int
+    val qualifiers: List<String>?,
+    val quantity: Int?
 )
 
 

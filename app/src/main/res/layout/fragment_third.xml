@@ -22,7 +22,7 @@
        android:id="@+id/btn_query"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_marginEnd="156dp"
+       android:layout_marginEnd="172dp"
 
        android:layout_marginBottom="20dp"
        android:text="Button"
@@ -32,7 +32,7 @@
    <EditText
        android:id="@+id/ed"
 
-       android:layout_width="wrap_content"
+       android:layout_width="200dp"
        android:layout_height="wrap_content"
        android:hint="請輸入文字"
        app:layout_constraintBottom_toBottomOf="parent"

@@ -18,12 +18,55 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        manifestPlaceholders = [GOOGLE_KEY: "${properties.getProperty('GOOGLE_KEY')}"]
+
+
+
+
     }
 
     buildTypes {
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream()) // load local.properties
+
+        def devKey = properties.getProperty('test.key.dev') // read property from local.properties
+
+
+
+        def OPENAI_KEY = properties.getProperty('OPENAI_KEY') // read property from local.properties
+        def food_ID = properties.getProperty('food_ID')
+        def food_KEY = properties.getProperty('food_KEY')
+
+
+        debug{
+
+            buildConfigField "String", "OPENAI_KEY", OPENAI_KEY // BuildConfig
+            buildConfigField "String", "food_ID", food_ID // BuildConfig
+            buildConfigField "String", "food_KEY", food_KEY // BuildConfig
+            resValue "string", "OPENAI_KEY", OPENAI_KEY // Resource
+            resValue "string", "food_ID", food_ID // Resource
+            resValue "string", "food_KEY", food_KEY // Resource
+
+
+
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "OPENAI_KEY", OPENAI_KEY // BuildConfig
+            buildConfigField "String", "food_ID", food_ID // BuildConfig
+            buildConfigField "String", "food_KEY", food_KEY // BuildConfig
+            resValue "string", "OPENAI_KEY", OPENAI_KEY // Resource
+            resValue "string", "food_ID", food_ID // Resource
+            resValue "string", "food_KEY", food_KEY // Resource
+
         }
     }
     compileOptions {

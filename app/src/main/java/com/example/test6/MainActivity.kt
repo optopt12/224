@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         view_pager.isUserInputEnabled = false
         val adapter = ViewPagerAdapter(supportFragmentManager,lifecycle)
         view_pager.adapter = adapter
-
         TabLayoutMediator(tabLayout,view_pager){tab,position->
             when(position){
                 0->{
